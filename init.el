@@ -21,7 +21,7 @@
        layout            ; auie,ctsrnm is the superior home row
 
        :completion
-       company           ; the ultimate code completion backend
+       (company +childframe)           ; the ultimate code completion backend (https://docs.doomemacs.org/latest/modules/completion/company/#/description/module-flags/childframe)
        ;;helm              ; the *other* search engine for love and life
        ;;ido               ; the other *other* search engine...
        ;;ivy               ; a search engine for love and life
@@ -66,12 +66,11 @@
        word-wrap         ; soft wrapping with language-aware indent
 
        :emacs
-       (dired +ranger +icons)            ; making dired pretty [functional], https://github.com/doomemacs/doomemacs/blob/develop/modules/emacs/dired/README.org
+       (dired +icons)            ; making dired pretty [functional], https://github.com/doomemacs/doomemacs/blob/develop/modules/emacs/dired/README.org
        electric          ; smarter, keyword-based electric-indent
-       ibuffer         ; interactive buffer management
-       undo              ; persistent, smarter undo for your inevitable mistakes
+       (ibuffer +icons)         ; interactive buffer management
+       (undo +tree)              ; persistent, smarter undo for your inevitable mistakes,  https://github.com/doomemacs/doomemacs/issues/2339, default: https://github.com/emacsmirror/undo-fu
        vc                ; version-control and Emacs, sitting in a tree
-       (undo +tree)      ; https://github.com/doomemacs/doomemacs/issues/2339, default: https://github.com/emacsmirror/undo-fu
 
        :term
        ;;eshell            ; the elisp shell that works everywhere
@@ -149,7 +148,7 @@
        ;;lean              ; for folks with too much to prove
        ;;ledger            ; be audit you can be
        ;;lua               ; one-based indices? one-based indices
-       markdown          ; writing docs for people to ignore
+       (markdown +grip)          ; writing docs for people to ignore
        ;;nim               ; python + lisp at the speed of c
        nix               ; I hereby declare "nix geht mehr!"
        ;;ocaml             ; an objective camel
