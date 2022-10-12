@@ -55,8 +55,15 @@
 ;; This is so buffers auto-save
 ;; auto save
 ;; https://joeprevite.com/doom-emacs/
-(setq auto-save-visited-interval 15)
+(setq auto-save-visited-interval 5)
 (auto-save-visited-mode +1)
+
+;; Save the session frequently
+;; https://emacs.stackexchange.com/questions/46963/how-i-can-make-persp-mode-save-my-workspace-on-every-change
+;; runs after 10s of idle time
+(run-with-idle-timer 10 t #'doom-save-session)
+;; or every 10s, period
+(run-at-time 10 t #'doom-save-session)
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
