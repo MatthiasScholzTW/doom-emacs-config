@@ -65,6 +65,10 @@
 ;; or every 10s, period
 (run-at-time 10 t #'doom-save-session)
 
+;; Earthly syntax highlighting support
+(use-package! earthfile-mode
+  :mode "Earthfile")
+
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
 ;;
