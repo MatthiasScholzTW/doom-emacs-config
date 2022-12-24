@@ -3,6 +3,7 @@
 # key: docker-compose
 # uuid: docker-compose
 # --
+---
 version: "3.9"
 services:
   $1:
