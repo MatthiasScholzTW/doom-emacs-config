@@ -51,3 +51,5 @@
 
 ;; https://github.com/syl20bnr/evil-tutor
 (package! evil-tutor)
+
+(package! mermaid-mode)
