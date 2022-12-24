@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# name: basic
+# uuid: basic
+# key: trigger-key
+# condition: t
+# ---
+# $1
+
+$0
+
+## Usage
+
+\`\`\`sh
+make run
+\`\`\`
+
+## References
+
+- [$2]($3)
