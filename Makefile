@@ -8,3 +8,6 @@ doctor:
 
 upgrade:
 	$(cmd) upgrade
+
+build:
+	$(cmd) build
