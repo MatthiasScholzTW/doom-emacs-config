@@ -70,10 +70,10 @@
 ;;  :mode "Earthfile")
 
 ;; Mermaid support
-(use-package! mermaid-mode
-  :config
-  (setq mermaid-mmdc-location "docker")
-  (setq mermaid-flags "run -u 1000 -v /tmp:/tmp ghcr.io/mermaid-js/mermaid-cli/mermaid-cli:9.1.6"))
+;; (use-package! mermaid-mode
+;;:config
+;;  (setq mermaid-mmdc-location "docker")
+;;  (setq mermaid-flags "run -u 1000 -v /tmp:/tmp ghcr.io/mermaid-js/mermaid-cli/mermaid-cli:9.1.6"))
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
