@@ -66,8 +66,8 @@
 (run-at-time 10 t #'doom-save-session)
 
 ;; Earthly syntax highlighting support
-(use-package! earthfile-mode
-  :mode "Earthfile")
+;; (use-package! earthfile-mode
+;;  :mode "Earthfile")
 
 ;; Mermaid support
 (use-package! mermaid-mode
