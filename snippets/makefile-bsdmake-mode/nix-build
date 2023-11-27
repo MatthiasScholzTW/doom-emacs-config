@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: Nix Build
+# uuid: nix-build-make
+# key: nix-build
+# condition: t
+# --
+app := $1
+
+build-local:
+  nix build
+
+run-local:
+  result/bin/app
+
+build-docker:
+  docker build -t \$(app):dev .
