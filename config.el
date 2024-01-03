@@ -54,7 +54,10 @@
 
 ;; activate multiedit default shortcuts
 ;; https://github.com/hlissner/evil-multiedit
-;; R: select all matches
+;; Select:
+;; M-d: Select current word and move to next (exact match) - no visual mode required
+;; R: select all matches done via visual mode
+;; Perform changes:
 ;; I: insert at the beginning
 ;; P: replace with clipboard content
 ;; D: delete
