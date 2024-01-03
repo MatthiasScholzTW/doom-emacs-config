@@ -52,6 +52,14 @@
 ;; https://docs.doomemacs.org/latest/modules/editor/evil/
 (setq evil-move-cursor-back nil)
 
+;; activate multiedit default shortcuts
+;; https://github.com/hlissner/evil-multiedit
+;; R: select all matches
+;; I: insert at the beginning
+;; P: replace with clipboard content
+;; D: delete
+(evil-multiedit-default-keybinds)
+
 ;; This is so buffers auto-save
 ;; auto save
 ;; https://joeprevite.com/doom-emacs/
