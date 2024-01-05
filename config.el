@@ -75,6 +75,10 @@
 (run-with-idle-timer 10 t #'doom-save-session)
 ;; or every 10s, period
 (run-at-time 10 t #'doom-save-session)
+;; Change default project search key binding
+(map! :leader
+      :desc "Search project"
+      "s p" #'+vertico/project-search)
 
 ;; Earthly syntax highlighting support
 ;; (use-package! earthfile-mode
