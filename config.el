@@ -75,6 +75,22 @@
 ;; (run-with-idle-timer 10 t #'doom-save-session)
 ;; or every 10s, period
 ;; (run-at-time 10 t #'doom-save-session)
+
+
+;; Support to open reference lookup on a different frame or window
+;; https://github.com/doomemacs/doomemacs/issues/3397
+(dolist (fn '(definition references))
+  (fset (intern (format "+lookup/%s-other-window" fn))
+        (lambda (identifier &optional arg)
+          "TODO"
+          (interactive (list (doom-thing-at-point-or-region)
+                             current-prefix-arg))
+          (let ((pt (point)))
+            (switch-to-buffer-other-window (current-buffer))
+            (goto-char pt)
+            (funcall (intern (format "+lookup/%s" fn)) identifier arg)))))
+(define-key evil-normal-state-map "god" '+lookup/definition-other-window)
+
 ;; Change default project search key binding
 (map! :leader
       :desc "Search project"
