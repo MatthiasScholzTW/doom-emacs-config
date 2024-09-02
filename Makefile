@@ -1,4 +1,4 @@
-emacs_path := ~/.emacs.d.doomemacs
+emacs_path := ~/.emacs.d
 bin_path := $(emacs_path)/bin
 cmd := $(bin_path)/doom
 sync:
@@ -18,3 +18,7 @@ build:
 
 clean:
 	find $(emacs_path) -name "*.elc" -type f -delete
+
+clear-package-cache:
+	rm -rf $(emacs_path)/.local/straight
+	$(cmd) sync
