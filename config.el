@@ -61,7 +61,7 @@
 ;; I: insert at the beginning
 ;; P: replace with clipboard content
 ;; D: delete
-(evil-multiedit-default-keybinds)
+;; FIXME (evil-multiedit-default-keybinds)
 
 ;; This is so buffers auto-save
 ;; auto save
