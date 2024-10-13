@@ -68,5 +68,15 @@
 ;; Open Policy Agent
 (package! rego-mode)
 
+
+;; Local AI model integration vio ollama
+;; Requires ollama to be running
+;; using `ollama pull zephyr`
+(package! ellama)
+;;  :ensure t
+;;  :init
+;;  ;; setup key bindings
+;;  (setopt ellama-keymap-prefix "C-c e"))
+
 ;; Listing of todos per project
 (package! magit-todos)

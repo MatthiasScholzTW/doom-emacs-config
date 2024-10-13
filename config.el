@@ -106,6 +106,33 @@
 ;;  (setq mermaid-mmdc-location "docker")
 ;;  (setq mermaid-flags "run -u 1000 -v /tmp:/tmp ghcr.io/mermaid-js/mermaid-cli/mermaid-cli:9.1.6"))
 
+;; Ellama configuration
+;; https://github.com/s-kostyaev/ellama
+;; https://discourse.doomemacs.org/t/how-to-re-bind-keys/56
+;; https://willschenk.com/labnotes/2024/ai_in_emacs/
+;; https://www.reddit.com/r/emacs/comments/j9vxvd/general_add_description_to_prefix_keys/
+(use-package! ellama
+  :init
+  (setopt ellama-keymap-prefix "C-c a"))
+(map! :leader
+      "m a" '(:ignore t :which-key "interact with ai")
+      :prefix "m a"
+      :desc "open chat" "t" #'ellama-chat
+      :desc "summarize" "s" #'ellama-summarize
+      :desc "ask" "a" #'ellama-ask-about
+      :desc "define" "d" #'ellama-define-word
+      :desc "commit msg" "g" #'ellama-generate-commit-message
+      "c" '(:ignore t :which-key "coding")
+      :desc "description to code" "a" #'ellama-code-add
+      :desc "review" "r" #'ellama-code-review
+      :desc "improve" "i" #'ellama-code-improve
+      :desc "complete" "c" #'ellama-code-complete
+      "i" '(:ignore t :which-key "improve writing")
+      :desc "grammar" "i g" #'ellama-improve-grammar
+      :desc "wording" "i w" #'ellama-improve-wording
+      :desc "conciseness" "i c" #'ellama-improve-conciseness
+      )
+;; ellama-complete ???
 
 ;; Listing of todos for projects
 (use-package! magit-todos
