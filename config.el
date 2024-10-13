@@ -95,6 +95,11 @@
 (map! :leader
       :desc "Search project"
       "s p" #'+vertico/project-search)
+;; TODO Understand why this is not configured as the default since vertico is set.
+(map! :leader
+      :desc "Search current directory"
+      "s d" #'+vertico/project-search-from-cwd)
+
 
 ;; Earthly syntax highlighting support
 ;; (use-package! earthfile-mode
