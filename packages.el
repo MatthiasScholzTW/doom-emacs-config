@@ -68,6 +68,9 @@
 ;; Open Policy Agent
 (package! rego-mode)
 
+;; Focus Mode
+;; https://github.com/larstvei/Focus
+(package! focus)
 
 ;; Local AI model integration vio ollama
 ;; Requires ollama to be running
