@@ -67,3 +67,6 @@
 
 ;; Open Policy Agent
 (package! rego-mode)
+
+;; Listing of todos per project
+(package! magit-todos)

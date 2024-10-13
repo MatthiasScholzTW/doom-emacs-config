@@ -106,6 +106,16 @@
 ;;  (setq mermaid-mmdc-location "docker")
 ;;  (setq mermaid-flags "run -u 1000 -v /tmp:/tmp ghcr.io/mermaid-js/mermaid-cli/mermaid-cli:9.1.6"))
 
+
+;; Listing of todos for projects
+(use-package! magit-todos
+  :after magit
+  :config
+  (magit-todos-mode 1)
+  (magit-todos-group-by "By keyword")
+  (setq magit-todos-keyword-suffix "\\(?:([^)]+)\\)?:?") ; make colon optional
+  (define-key magit-todos-section-map "j" nil))
+
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
 ;;
