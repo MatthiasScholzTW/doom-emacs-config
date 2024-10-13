@@ -54,8 +54,12 @@
 
 (package! mermaid-mode)
 (package! earthfile-mode)
+
+;; TODO Get dotenv working
 ;;(package! project-env
 ;;  :recipe (:local-repo "lisp/dotenv"))
+(package! dotenv
+  :recipe (:host github :repo "pkulev/dotenv.el"))
 
 ;; https://github.com/janusvm/emacs-gitmoji
 ;; M-x gitmoji-insert-emoji

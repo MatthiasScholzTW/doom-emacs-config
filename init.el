@@ -99,7 +99,7 @@
        make              ; run make tasks from Emacs
        ;;pass              ; password manager for nerds
        pdf               ; pdf enhancements
-       dotenv         ; Load the content of a .env file into emacs for projectile and compilation
+       ;; FIXME Not working dotenv         ; Load the content of a .env file into emacs for projectile and compilation
        ;;prodigy           ; FIXME managing external services & code builders
        ;;rgb               ; creating color strings
        taskrunner        ; taskrunner for all your projects
