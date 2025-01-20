@@ -161,6 +161,12 @@
   (setq magit-todos-keyword-suffix "\\(?:([^)]+)\\)?:?") ; make colon optional
   (define-key magit-todos-section-map "j" nil))
 
+;; Terramate specific file extension as terraform
+(add-to-list 'auto-mode-alist '("\\.tmgen\\'" . terraform-mode))
+;; HACK support terraform buffer formatting
+;; FIXME support hcl buffer formatting in general
+(add-to-list 'auto-mode-alist '("\\.tm.hcl\\'" . terraform-mode))
+
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
 ;;
