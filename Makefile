@@ -16,7 +16,7 @@ upgrade-manual:
 build:
 	$(cmd) build
 
-emacs_version := 29.4
+emacs_version := 30.0.92
 emacs_vterm_dir := /Users/matthias/.emacs.d/.local/straight/build-$(emacs_version)/vterm/build
 libvterm_version := 0.3.3
 libvterm_dir := /opt/homebrew/Cellar/libvterm/$(libvterm_version)
