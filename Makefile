@@ -21,6 +21,7 @@ emacs_vterm_dir := /Users/matthias/.emacs.d/.local/straight/build-$(emacs_versio
 libvterm_version := 0.3.3
 libvterm_dir := /opt/homebrew/Cellar/libvterm/$(libvterm_version)
 build-vterm:
+	mkdir $(emacs_vterm_dir)
 	cd $(emacs_vterm_dir) && cmake -DLIBVTERM_INCLUDE_DIR=$(libvterm_dir)/include -DLIBVTERM_LIBRARY=$(libvterm_dir)/lib/libvterm.0.dylib ..
 	cd $(emacs_vterm_dir) && make
 
