@@ -100,20 +100,6 @@
       :desc "Search current directory"
       "s d" #'+vertico/project-search-from-cwd)
 
-;; .env support
-(use-package! dotenv
-  :init
-  (when (file-exists-p (expand-file-name ".env" doom-user-dir))
-    (add-hook! 'doom-init-ui-hook
-      (defun +dotenv-startup-hook ()
-        "Load .env after starting emacs"
-        (dotenv-update-project-env doom-user-dir))))
-  :config
-  (add-hook! 'projectile-after-switch-project-hook
-    (defun +dotenv-projectile-hook ()
-      "Load .env after changing projects."
-      (dotenv-update-project-env (projectile-project-root)))))
-
 ;; Earthly syntax highlighting support
 ;; (use-package! earthfile-mode
 ;;  :mode "Earthfile")

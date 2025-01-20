@@ -99,7 +99,14 @@
        make              ; run make tasks from Emacs
        ;;pass              ; password manager for nerds
        pdf               ; pdf enhancements
-       ;; FIXME Not working dotenv         ; Load the content of a .env file into emacs for projectile and compilation
+
+
+                                        ; NOTE Currently there is an issue with emacs launcher app not setting all nix variables correctly
+                                        ; https://github.com/purcell/envrc/issues/92
+                                        ; -> using terminal to start emacs
+                                        ; TODO consider using the launchctl workaround:
+                                        ; https://github.com/purcell/envrc/issues/92#issuecomment-2442682887
+       dotenv         ; Load the content of a .env file into emacs for projectile and compilation
        ;;prodigy           ; FIXME managing external services & code builders
        ;;rgb               ; creating color strings
        taskrunner        ; taskrunner for all your projects
