@@ -153,6 +153,16 @@
 ;; FIXME support hcl buffer formatting in general
 (add-to-list 'auto-mode-alist '("\\.tm.hcl\\'" . terraform-mode))
 
+;; Open Policy Agent lsp and linting support using regal
+;; SEE: https://emacs-lsp.github.io/lsp-mode/page/adding-new-language/
+;; SEE: https://docs.styra.com/regal/language-server#features
+(add-to-list 'lsp-language-id-configuration '(rego-mode . "open-policy-agent"))
+
+(lsp-register-client (make-lsp-client
+                      :new-connection (lsp-stdio-connection '("regal" "language-server"))
+                      :activation-fn (lsp-activate-on "open-policy-agent")
+                      :server-id 'regal))
+
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
 ;;
