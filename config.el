@@ -153,6 +153,11 @@
 ;; FIXME support hcl buffer formatting in general
 (add-to-list 'auto-mode-alist '("\\.tm.hcl\\'" . terraform-mode))
 
+;; Configure Difftastic
+(use-package! difftastic-bindings
+  :ensure difftastic ;; or nil if you prefer manual installation
+  :config (difftastic-bindings-mode))
+
 ;; Open Policy Agent lsp and linting support using regal
 ;; SEE: https://emacs-lsp.github.io/lsp-mode/page/adding-new-language/
 ;; SEE: https://docs.styra.com/regal/language-server#features

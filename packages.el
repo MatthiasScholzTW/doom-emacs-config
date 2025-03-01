@@ -87,3 +87,6 @@
 
 ;; Listing of todos per project
 (package! magit-todos)
+
+;; Difftastic
+(package! difftastic)
