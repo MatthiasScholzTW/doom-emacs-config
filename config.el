@@ -139,13 +139,16 @@
 ;; ellama-complete ???
 
 ;; Listing of todos for projects
-(use-package! magit-todos
-  :after magit
-  :config
-  (magit-todos-mode 1)
-  (magit-todos-group-by "By keyword")
-  (setq magit-todos-keyword-suffix "\\(?:([^)]+)\\)?:?") ; make colon optional
-  (define-key magit-todos-section-map "j" nil))
+;; FIXME it seems it creates problems
+;; (use-package! magit-todos
+;;   :after magit
+;;   :config
+;;   (magit-todos-mode 1)
+;;   ;; FIXME seems to create error: function definition is void:
+;;   (setq magit-todos-group-by "By keyword")
+;;   (setq magit-todos-keyword-suffix "\\(?:([^)]+)\\)?:?") ; make colon optional
+;;   (setq magit-todos-exclude-globs "*.js.map") ; ignore javascript compilations
+;;   (define-key magit-todos-section-map "j" nil ))
 
 ;; Terramate specific file extension as terraform
 (add-to-list 'auto-mode-alist '("\\.tmgen\\'" . terraform-mode))
