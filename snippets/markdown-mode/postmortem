@@ -1,0 +1,64 @@
+# -*- mode: snippet -*-
+# name: Postmortem
+# key: postmortem                      
+# --
+> Sample template from: Thomas A. Limoncelli. [“The Practice of Cloud System Administration: Designing and Operating Large Distributed Systems, Volume 2.”](http://the-cloud-book.com/).
+
+# Title $1
+
+- tags:
+
+### Report Status
+
+- reported|acknowledged|ongoing|analysed|solved
+$2
+
+### Executive Summary
+
+$3
+
+### Outage Description
+
+$4
+
+### Resolution
+
+$5
+
+### Affected users
+
+-
+
+### Start Date/Time
+
+-
+
+### End Date/Time
+
+-
+
+### Duration
+
+-
+
+## Timeline
+
+-
+
+## Contributing Conditions Analysis
+
+### What went well?
+
+-
+
+### What could have gone better?
+
+-
+
+## Recommendations
+
+-
+
+### Names of people involved
+
+-
