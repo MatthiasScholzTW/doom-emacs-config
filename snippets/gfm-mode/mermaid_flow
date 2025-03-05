@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: Mermaid Flow
+# uuid:
+# key: mermaid_flow
+# condition: t
+# --
+\`\`\`mermaid
+flowchart LR
+    box1
+\`\`\`

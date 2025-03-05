@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: Taskfile
+# uuid:
+# key: taskfile
+# condition: t
+# --
+version: '3'
+
+tasks:
+  $1:
+    cmds:
+      - $2

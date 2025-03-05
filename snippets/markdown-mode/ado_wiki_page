@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# name: ADO Wiki Page Skeleton
+# uuid:
+# key: ado_wiki_page
+# condition: t
+# --
+# $1
+
+[[_TOC_]]
+
+[[_TOSP_]]
+
+## Overview
+
+$0
+
+## References
+
+- ...

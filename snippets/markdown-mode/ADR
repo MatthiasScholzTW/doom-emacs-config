@@ -1,0 +1,49 @@
+# -*- mode: snippet -*-
+# name: ADR
+# key: adr
+# --
+# $1
+
+- status: ${2:Draft, Proposed, Adopted, Superseded, Retired}
+- date: `(current-time-string)`
+
+## Decision
+
+The decision that has been taken in a few sentences (frequently bold or italicized so it stands out).
+
+### Architectural Principals
+
+#### Applied
+
+#### Violated
+
+## Context
+
+The forces and current contextual circumstances which have necessitated this decision.
+
+## Options Considered
+
+$0
+Each option considered, described briefly, with pros and cons. (Typically the option proposed / adopted comes first in this list)
+
+### < proposed option>
+
+#### Pros
+
+#### Cons
+
+### < other option>
+
+#### Pros
+
+#### Cons
+
+## Consequences
+
+The ramifications of this decision, both positive and negative. Particularly those that are complex, far-reaching, or unintended. The ripple effects of the decision.
+
+## Advice
+
+Reflects the raw outputs from following the Advice Process. It is here that all advice given is recorded. This ought to include the name of the advice giver, and the date the advice was given. This can frequently take the forms of comments.
+
+### < date >: < advisor >
