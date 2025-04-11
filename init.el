@@ -67,7 +67,7 @@
        word-wrap         ; soft wrapping with language-aware indent
 
        :emacs
-       (dired +icons)            ; making dired pretty [functional], https://github.com/doomemacs/doomemacs/blob/develop/modules/emacs/dired/README.org
+       (dired +dirvish +icons)            ; making dired pretty [functional], https://github.com/doomemacs/doomemacs/blob/develop/modules/emacs/dired/README.org
        electric          ; smarter, keyword-based electric-indent
        (ibuffer +icons)         ; interactive buffer management
        (undo +tree)              ; persistent, smarter undo for your inevitable mistakes,  https://github.com/doomemacs/doomemacs/issues/2339, default: https://github.com/emacsmirror/undo-fu
