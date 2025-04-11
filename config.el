@@ -176,6 +176,16 @@
                       :server-id 'regal))
 
 
+;; Terramate Language Server
+(add-to-list 'lsp-language-id-configuration '(terraform-mode . "terramate"))
+(add-to-list 'lsp-language-id-configuration '(hcl-mode . "terramate"))
+
+(lsp-register-client (make-lsp-client
+                      :new-connection (lsp-stdio-connection '("terramate-lsp"))
+                      :activation-fn (lsp-activate-on "terramate")
+                      :server-id 'terrmate))
+
+
 ;; Interactive JSON with jq
 ;; https://github.com/ljos/jq-mode
 (use-package! jq-mode)
