@@ -90,3 +90,7 @@
 
 ;; Difftastic
 (package! difftastic)
+
+;; Interactive JSON filtering using jq
+;; https://github.com/ljos/jq-mode
+(package! jq-mode)

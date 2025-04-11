@@ -175,6 +175,14 @@
                       :activation-fn (lsp-activate-on "open-policy-agent")
                       :server-id 'regal))
 
+
+;; Interactive JSON with jq
+;; https://github.com/ljos/jq-mode
+(use-package! jq-mode)
+(setq jq-interactive-command "yq"
+      jq-interactive-font-lock-mode #'yaml-mode
+      jq-interactive-default-options "--yaml-roundtrip")
+
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
 ;;
