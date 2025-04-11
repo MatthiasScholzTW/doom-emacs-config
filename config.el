@@ -38,6 +38,10 @@
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type t)
 
+;; Have fine undo instead of the coarse vim default undo until last insert mode
+;; https://www.reddit.com/r/DoomEmacs/comments/r78bwz/comment/hmxqjzb/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
+(setq evil-want-fine-undo t)
+
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 ;; (setq org-directory "~/org/")
