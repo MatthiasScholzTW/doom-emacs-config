@@ -110,7 +110,7 @@
        dotenv         ; Load the content of a .env file into emacs for projectile and compilation
        ;;prodigy           ; FIXME managing external services & code builders
        ;;rgb               ; creating color strings
-       taskrunner        ; taskrunner for all your projects
+       ;; deprecated taskrunner        ; taskrunner for all your projects
        terraform         ; infrastructure as code
        ;;tmux              ; an API for interacting with tmux
        tree-sitter         ; Better syntax highlighting and structural text objects
@@ -170,7 +170,7 @@
        ;;racket            ; a DSL for DSLs
        ;;raku              ; the artist formerly known as perl6
        ;;rest              ; Emacs as a REST client
-       rst               ; ReST in peace
+       ;;rst               ; ReST in peace (reStructuredText)
        ;;(ruby +rails)     ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
        ;;rust              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
        ;;scala             ; java, but good

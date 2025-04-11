@@ -108,7 +108,7 @@
 ;; (use-package! earthfile-mode
 ;;  :mode "Earthfile")
 
-;; Mermaid support
+;; Mermaid support - NOTE use go-grip instead
 ;; (use-package! mermaid-mode
 ;;:config
 ;;  (setq mermaid-mmdc-location "docker")
