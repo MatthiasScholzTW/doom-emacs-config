@@ -1,0 +1,31 @@
+# -*- mode: snippet -*-
+# name: AWS IAM Policy Attachement
+# key: iam_policy
+# --
+data "aws_iam_policy_document" "manage_$1" {
+  statement {
+    sid = "$2"
+    actions = [
+      "$3",
+    ]
+
+    resources = [
+      "$4"
+    ]
+  }
+}
+
+resource "aws_iam_policy" "manage_$1" {
+  name_prefix = "${data.aws_iam_role.role.name}-manage_$1"
+  policy      = data.aws_iam_policy_document.manage_$1.json
+}
+
+resource "aws_iam_role_policy_attachment" "devops_manage_$1" {
+  role       = data.aws_iam_role.role.name
+  policy_arn = aws_iam_policy.manage_$1.arn
+}
+
+# TODO check for duplication
+data "aws_iam_role" "role" {
+  name = var.role_name
+}

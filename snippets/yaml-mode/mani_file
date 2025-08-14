@@ -1,0 +1,29 @@
+# -*- mode: snippet -*-
+# name: mani file configuration
+# uuid: mani_file
+# key: mani_file
+# condition: t
+# expand-env: ((yas-indent-line nil))
+# --
+projects:
+  <name>:
+    path: <path>
+    url: $1
+    tags: [nix]
+
+tasks:
+  git-status:
+    desc: show working tree status
+    cmd: git status -s
+
+  git-fetch:
+    desc: fetch all remotes
+    cmd: git fetch --all
+
+  git-pull:
+    desc: pull and rebase main
+    cmd: git pull --rebase --autostash origin main
+
+  tf-modules:
+    desc: list all used terraform modules
+    cmd: rg "^( *)source.*=" | sort -u
