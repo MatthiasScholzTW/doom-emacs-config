@@ -183,6 +183,14 @@
                       :activation-fn (lsp-activate-on "open-policy-agent")
                       :server-id 'regal))
 
+;; Knowledge Management via LSP
+(add-to-list 'lsp-language-id-configuration '(markdown-mode . "markdown"))
+(add-to-list 'lsp-language-id-configuration '(gfm-mode . "markdown"))
+
+(lsp-register-client (make-lsp-client
+                      :new-connection (lsp-stdio-connection '("markdown-oxide"))
+                      :activation-fn (lsp-activate-on "markdown")
+                      :server-id 'markdown-oxide))
 
 ;; Terramate Language Server
 (add-to-list 'lsp-language-id-configuration '(terraform-mode . "terramate"))
