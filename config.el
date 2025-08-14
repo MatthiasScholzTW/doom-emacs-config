@@ -201,6 +201,30 @@
       jq-interactive-font-lock-mode #'yaml-mode
       jq-interactive-default-options "--yaml-roundtrip")
 
+;; LLM client
+;; https://github.com/karthink/gptel?tab=readme-ov-file#doom-emacs
+;; https://github.com/karthink/gptel?tab=readme-ov-file#gemini
+(use-package! gptel
+  :config
+  (setq!
+   gptel-model 'gemini-pro
+   gptel-backend (gptel-make-gemini "Gemini"
+                   :key (auth-source-pick-first-password  :host "Google Gemini API Credentials" :user "credential")
+                   :stream t))
+  )
+
+;; MCPs
+;; https://github.com/lizqwerscott/mcp.el
+;; TODO decide on the folder reference
+(use-package! mcp
+  :ensure t
+  :after gptel
+  :custom (mcp-hub-servers
+           `(("filesystem" . (:command "npx" :args ("-y" "@modelcontextprotocol/server-filesystem" "/home/projects/")))
+             ("fetch" . (:command "uvx" :args ("mcp-server-fetch")))))
+  :config (require 'mcp-hub)
+  :hook (after-init . mcp-hub-start-all-server))
+
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
 ;;

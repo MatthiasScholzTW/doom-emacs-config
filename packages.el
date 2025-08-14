@@ -95,6 +95,11 @@
 ;; https://github.com/ljos/jq-mode
 (package! jq-mode)
 
+;; LLM client
+;; https://github.com/karthink/gptel?tab=readme-ov-file#doom-emacs
+(package! gptel :recipe (:nonrecursive t))
+(package! mcp)
+
 ;; 1-Password Connector
 (package! auth-source-1password
      :recipe (:host github
