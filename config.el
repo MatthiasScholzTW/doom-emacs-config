@@ -42,6 +42,14 @@
 ;; https://www.reddit.com/r/DoomEmacs/comments/r78bwz/comment/hmxqjzb/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
 (setq evil-want-fine-undo t)
 
+;; 1-Password Connector
+(use-package! auth-source-1password
+  :config
+  (setq auth-source-1password-executable "op")
+  (setq auth-source-1password-vault "Private")
+  :init
+  (auth-source-1password-enable))
+
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 ;; (setq org-directory "~/org/")

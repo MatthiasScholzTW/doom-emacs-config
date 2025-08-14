@@ -94,3 +94,10 @@
 ;; Interactive JSON filtering using jq
 ;; https://github.com/ljos/jq-mode
 (package! jq-mode)
+
+;; 1-Password Connector
+(package! auth-source-1password
+     :recipe (:host github
+              :repo "dlobraico/auth-source-1password"
+              :files ("*.el")))
+
