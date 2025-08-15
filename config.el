@@ -313,6 +313,43 @@
                    :stream t))
   )
 
+;; AI Agent
+;; https://github.com/MatthewZMD/aidermacs
+(use-package! aidermacs
+                                        ; TODO :bind (("C-c a" . aidermacs-transient-menu))
+  :config
+                                        ; Set API_KEY in .bashrc, that will automatically picked up by aider or in elisp
+  (setenv "GEMINI_API_KEY" (auth-source-pick-first-password  :host "Google Gemini API Credentials" :user "credential"))
+  :custom
+                                        ; See the Configuration section below
+  (aidermacs-default-chat-mode 'architect)
+  (aidermacs-default-model "gemini-2.5-pro"))
+;; alternative aider
+;; The aider prefix is:              [SPC] A
+;; .Start and open the aider buffer: [SPC] A p a
+;; .Add the current file with:       [SPC] A f f
+;; .Reset the aider session with:    [SPC] A p s
+(use-package! aider
+  :config
+  ;; For latest claude sonnet model
+  ;; (setq aider-args '("--model" "sonnet" "--no-auto-accept-architect")) ;; add --no-auto-commits if you don't want it
+  ;; (setenv "ANTHROPIC_API_KEY" anthropic-api-key)
+  (setq aider-args '("--model" "gemini-2.5-pro" "--no-auto-accept-architect" "--no-auto-commits"))
+  (setenv "GEMINI_API_KEY" (auth-source-pick-first-password  :host "Google Gemini API Credentials" :user "credential"))
+  ;; Or use your personal config file
+  ;; (setq aider-args `("--config" ,(expand-file-name "~/.aider.conf.yml")))
+  ;;
+  ;; Multiple chats for the same repository - per branch
+  (setq aider-use-branch-specific-buffers t)
+  ;; add aider magit function to magit menu
+  (aider-magit-setup-transients)
+  ;; auto revert buffer
+  (global-auto-revert-mode 1)
+  (auto-revert-mode 1)
+  ;; NOTE transient menu is more recommended than doom menu, cause I constantly use that one so it is better maintained.
+  (require 'aider-doom))
+
+
 ;; MCPs
 ;; https://github.com/lizqwerscott/mcp.el
 ;; TODO decide on the folder reference

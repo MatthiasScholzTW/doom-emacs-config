@@ -100,6 +100,13 @@
 (package! gptel :recipe (:nonrecursive t))
 (package! mcp)
 
+;; AI Agent
+;; https://github.com/MatthewZMD/aidermacs
+(package! aidermacs)
+;; alternative:
+;; https://github.com/tninja/aider.el/tree/main
+(package! aider :recipe (:host github :repo "tninja/aider.el" ))
+
 ;; 1-Password Connector
 (package! auth-source-1password
      :recipe (:host github
