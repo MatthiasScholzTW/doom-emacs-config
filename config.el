@@ -171,7 +171,7 @@
            :key (auth-source-pick-first-password  :host "Google Gemini API Credentials" :user "credential")
            ;; SEE: https://ai.google.dev/gemini-api/docs/models
            ;; Enhanced thinking and reasoning, multimodal understanding, advanced coding, and more
-           :chat-model "gemini-2.5-pro-preview-05-06"
+           :chat-model "gemini-2.5-pro"
            :embedding-model "embedding-001")
           ;; FIXME NOT working llm-warn-on-nonfree nil)
           )
