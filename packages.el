@@ -107,6 +107,16 @@
 ;; https://github.com/tninja/aider.el/tree/main
 (package! aider :recipe (:host github :repo "tninja/aider.el" ))
 
+;; ACP Agent
+;; https://github.com/xenodium/agent-shell
+(package! shell-maker)
+(package! acp :recipe (:host github :repo "xenodium/acp.el" :files ("*.el")))
+(package! agent-shell :recipe (:host github :repo "xenodium/agent-shell" :files ("*.el")))
+(package! agent-shell-manager :recipe (:host github :repo "jethrokuan/agent-shell-manager" :files ("*.el")))
+(package! agent-shell-sidebar :recipe (:host github :repo "cmacrae/agent-shell-sidebar" :files ("*.el")))
+(package! agent-review :recipe (:host github :repo "nineluj/agent-review" :files ("*.el")))
+(package! agent-shell-attention :recipe (:host github :repo "ultronozm/agent-shell-attention.el" :files ("*.el")))
+
 ;; 1-Password Connector
 (package! auth-source-1password
      :recipe (:host github
