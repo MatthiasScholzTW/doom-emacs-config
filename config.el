@@ -424,6 +424,34 @@
   :config (require 'mcp-hub)
   :hook (after-init . mcp-hub-start-all-server))
 
+;; Obsidian Vault Support
+;; https://github.com/licht1stein/obsidian.el
+(use-package! obsidian
+  :config
+  (global-obsidian-mode t)
+  (define-key obsidian-mode-map (kbd "C-c M-o") 'obsidian-hydra/body)
+  ;; (obsidian-backlinks-mode t)
+  :custom
+  (obsidian-create-unfound-files-in-inbox t)
+  (obsidian-backlinks-show-vault-path t)
+  ;; location of obsidian vault
+  (obsidian-directory "~/projects/tw/tw")
+  ;; Default location for new notes from `obsidian-capture'
+  (obsidian-inbox-directory "_inbox")
+  (obsidian-templates-directory "_templates")
+  (obsidian-daily-notes-directory "_inbox")
+  (obsidian-daily-note-template "notes/DailyNote.md"))
+;; TODO Consider creating own menu for higher flexibility or avoid indirection
+(map! :leader
+      "m k" '(:ignore t :which-key "interact with obsidian")
+      :prefix "m k"
+      :desc "open menu" "m" #'obsidian-hydra/body
+      :desc "search vault" "s" #'obsidian-search
+      :desc "daily note" "d" #'obsidian-daily-note
+      :desc "insert tag" "t" #'obsidian-insert-tag
+      :desc "insert link" "l" #'obsidian-insert-link
+      )
+
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
 ;;
