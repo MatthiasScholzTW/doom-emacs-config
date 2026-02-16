@@ -355,6 +355,62 @@
 ;;   ;; NOTE transient menu is more recommended than doom menu, cause I constantly use that one so it is better maintained.
 ;;   (require 'aider-doom))
 
+;; ACP Support
+;; https://github.com/xenodium/agent-shell
+(use-package! agent-shell
+  :config
+  (require 'acp)
+  (setq agent-shell-google-authentication
+        (agent-shell-google-make-authentication
+         :api-key (lambda () (auth-source-pick-first-password  :host "Google Gemini API Credentials" :user "credential"))))
+  (setq agent-shell-opencode-authentication
+        (agent-shell-opencode-make-authentication
+         :api-key (lambda () (auth-source-pick-first-password  :host "Google Gemini API Credentials" :user "credential"))))
+  (setq agent-shell-preferred-agent-config
+        (agent-shell-opencode-make-agent-config))
+  )
+;; https://github.com/jethrokuan/agent-shell-manager
+(use-package! agent-shell-manager
+  :config
+  (require 'agent-shell))
+;; https://github.com/cmacrae/agent-shell-sidebar
+(use-package! agent-shell-sidebar
+  :config
+  (require 'agent-shell)
+  (setq agent-shell-sidebar-default-config
+        (agent-shell-opencode-make-agent-config))
+  )
+;; https://github.com/nineluj/agent-review
+(use-package! agent-review
+  :config
+  (require 'agent-shell)
+  )
+;; https://github.com/ultronozm/agent-shell-attention.el
+(use-package! agent-shell-attention
+  :config
+  (require 'agent-shell)
+  (setopt agent-shell-attention-render-function #'agent-shell-attention-render-active)
+  (setopt agent-shell-attention-show-zeros t)
+  (setopt agent-shell-attention-notify-function #'agent-shell-attention-notify-default)
+  )
+;; Menu
+(map! :leader
+      "m a" '(:ignore t :which-key "interact with ai (agent-shell)")
+      :prefix "m a"
+      :desc "manager" "m" #'agent-shell-manager-toggle
+      :desc "opencode" "o" #'agent-shell-opencode-start-agent
+      :desc "gemini" "g" #'agent-shell-google-start-gemini
+      :desc "mode" "a" #'agent-shell-set-session-mode
+      :desc "model" "b" #'agent-shell-set-session-model
+      :desc "sidebar" "t" #'agent-shell-sidebar-toggle-focus
+      :desc "review" "r" #'agent-review
+      :desc "jump" "j" #'agent-shell-attention-jump
+      :desc "completion" "c" #'agent-shell-completion-mode
+      ;; "i" '(:ignore t :which-key "improve writing")
+      ;; :desc "grammar" "i g" #'ellama-improve-grammar
+      ;; :desc "wording" "i w" #'ellama-improve-wording
+      ;; :desc "conciseness" "i c" #'ellama-improve-conciseness
+      )
 
 ;; MCPs
 ;; https://github.com/lizqwerscott/mcp.el
