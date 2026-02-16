@@ -123,3 +123,7 @@
               :repo "dlobraico/auth-source-1password"
               :files ("*.el")))
 
+;; Obsidian Vault Support
+;; https://github.com/licht1stein/obsidian.el
+(package! obsidian)
+
