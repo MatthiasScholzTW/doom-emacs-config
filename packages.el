@@ -127,3 +127,8 @@
 ;; https://github.com/licht1stein/obsidian.el
 (package! obsidian)
 
+;; REST API Client: hurl
+;; https://hurl.dev
+;; https://github.com/JasZhe/hurl-mode
+(package! hurl-mode :recipe (:host github :repo "jaszhe/hurl-mode" :files ("*.el")))
+
