@@ -42,6 +42,11 @@
 ;; https://www.reddit.com/r/DoomEmacs/comments/r78bwz/comment/hmxqjzb/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
 (setq evil-want-fine-undo t)
 
+;; Sort directories in dired
+(require 'ls-lisp)
+(setq ls-lisp-dirs-first t)
+(setq ls-lisp-use-insert-directory-program nil)
+
 ;; 1-Password Connector
 (use-package! auth-source-1password
   :config
