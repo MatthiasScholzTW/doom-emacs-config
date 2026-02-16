@@ -452,6 +452,60 @@
       :desc "insert link" "l" #'obsidian-insert-link
       )
 
+;; CircuitPython IDE
+;; TODO Rename an integrate into doomemacs configuration
+;; https://hadi.timachi.com/posts/micro_python_in_emacs
+;;; my-micropython.el --- Module providing micropython helpers in my Emacs config -*- lexical-binding: t; -*-
+(define-minor-mode my/micropython
+  "Minor mode for micropython."
+  :init-value nil
+  :global nil
+  :lighter " my/mp")
+
+(defun my/comint-micropython-sender (proc string)
+  "Alter the coming sender to include \r at the line end."
+  (let ((send-string (concat string "\n\r")))
+    (comint-send-string proc send-string))
+  (if (string-equal string "")
+      (process-send-eof)))
+
+(defun my/micropython-send-region (beg end)
+  "Send region to micropython comint."
+  (interactive "r")
+  (let* ((string (buffer-substring beg end))
+         (new-string (s-replace "\n" "\r" string)))
+    (comint-send-string "*Micropython*" "")
+    (comint-send-string "*Micropython*" (concat new-string "\r\n")))
+  )
+
+(defun my/micropython-send-buffer ()
+  "Send buffer to micropython comint."
+  (interactive)
+  (let* ((string (buffer-string))
+         (new-string (s-replace "\n" "\r" string)))
+    (comint-send-string "*Micropython*" "")
+    (comint-send-string "*Micropython*" (concat new-string "\r\n")))
+  )
+
+;; TODO Grab picocom using direnv configuration since it is installed using devenv
+(defun my/start-micropython ()
+  "Start a REPL based on the user input on serial connection.
+`picocom command should be available on the system.'"
+  (interactive)
+  (let ((current-buffer (current-buffer))
+        (buffer-name "*Micropython*")
+        (dev-addr (read-file-name "Serial device address: " "/dev/" nil nil))
+        (baudrate (read-number "Baud rate: " 115200)))
+    (make-comint-in-buffer "picocom" buffer-name "/nix/store/gyf4bahic3r261cxc2z3pzih7vp1ssyq-picocom-2024-07/bin/picocom" nil dev-addr (concat "-b" ) (number-to-string baudrate))
+    (my/micropython 1)
+    (switch-to-buffer buffer-name)
+    (setq-local comint-input-sender 'my/comint-micropython-sender)
+    (switch-to-buffer current-buffer)
+    (display-buffer buffer-name)))
+
+(provide 'my-micropython)
+;;; my-micropython.el ends here
+
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
 ;;
