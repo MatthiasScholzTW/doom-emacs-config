@@ -119,9 +119,9 @@
 
 ;; 1-Password Connector
 (package! auth-source-1password
-     :recipe (:host github
-              :repo "dlobraico/auth-source-1password"
-              :files ("*.el")))
+  :recipe (:host github
+           :repo "dlobraico/auth-source-1password"
+           :files ("*.el")))
 
 ;; Obsidian Vault Support
 ;; https://github.com/licht1stein/obsidian.el
