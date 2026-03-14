@@ -141,116 +141,116 @@
 ;; ollama pull "llama3:8b-instruct-q8_0"
 ;; ollama pull "qwen2.5:3b"
 ;; ollama pull "qwen2.5-coder:3b"
-(use-package! ellama
-  :ensure t
-  ;;::bind ("C-c e" . ellama)
-  :bind ("C-c a" . ellama)
-  ;; send last message in chat buffer with C-c C-c
-  :hook (org-ctrl-c-ctrl-c-final . ellama-chat-send-last-message)
-  :init
-  ;; TODO Check: OLD? DEPRECATED? setup key bindings
-  ;; (setopt ellama-keymap-prefix "C-c e")
-  ;; (setopt ellama-keymap-prefix "C-c a")
-  ;; language you want ellama to translate to
-  ;; (setopt ellama-language "German")
-  ;; could be llm-openai for example
-  ;;(require 'llm-ollama)
-  ;; (setopt ellama-provider
-  ;; 	  (make-llm-ollama
-  ;; 	   ;; this model should be pulled to use it
-  ;; 	   ;; value should be the same as you print in terminal during pull
-  ;;          ;; ollama pull "llama3:8b-instruct-q8_0"
-  ;; 	   :chat-model "llama3:8b-instruct-q8_0"
-  ;; 	   :embedding-model "nomic-embed-text"
-  ;; 	   :default-chat-non-standard-params '(("num_ctx" . 8192))))
-  ;; (setopt ellama-summarization-provider
-  ;; 	  (make-llm-ollama
-  ;;          ;; ollama pull "qwen2.5:3b"
-  ;; 	   :chat-model "qwen2.5:3b"
-  ;; 	   :embedding-model "nomic-embed-text"
-  ;; 	   :default-chat-non-standard-params '(("num_ctx" . 32768))))
-  ;; (setopt ellama-coding-provider
-  ;; 	  (make-llm-ollama
-  ;;          ;; ollama pull "qwen2.5-coder:3b"
-  ;; 	   :chat-model "qwen2.5-coder:3b"
-  ;; 	   :embedding-model "nomic-embed-text"
-  ;; 	   :default-chat-non-standard-params '(("num_ctx" . 32768))))
-  (require 'llm-gemini)
-  (setopt ellama-provider
-          (make-llm-gemini
-           :key (auth-source-pick-first-password  :host "Google Gemini API Credentials" :user "credential")
-           ;; SEE: https://ai.google.dev/gemini-api/docs/models
-           ;; Enhanced thinking and reasoning, multimodal understanding, advanced coding, and more
-           :chat-model "gemini-2.5-pro"
-           :embedding-model "embedding-001")
-          ;; FIXME NOT working llm-warn-on-nonfree nil)
-          )
-  ;; Predefined llm providers for interactive switching.
-  ;; You shouldn't add ollama providers here - it can be selected interactively
-  ;; without it. It is just example.
-  ;;(setopt ellama-providers
-  ;;	  '(("zephyr" . (make-llm-ollama
-  ;;			 :chat-model "zephyr:7b-beta-q6_K"
-  ;;			 :embedding-model "zephyr:7b-beta-q6_K"))
-  ;;	    ("mistral" . (make-llm-ollama
-  ;;			  :chat-model "mistral:7b-instruct-v0.2-q6_K"
-  ;;			  :embedding-model "mistral:7b-instruct-v0.2-q6_K"))
-  ;;	    ("mixtral" . (make-llm-ollama
-  ;;			  :chat-model "mixtral:8x7b-instruct-v0.1-q3_K_M-4k"
-  ;;			  :embedding-model "mixtral:8x7b-instruct-v0.1-q3_K_M-4k"))))
-  ;; Naming new sessions with llm
-  ;; (setopt ellama-naming-provider
-  ;; 	  (make-llm-ollama
-  ;; 	   :chat-model "llama3:8b-instruct-q8_0"
-  ;; 	   :embedding-model "nomic-embed-text"
-  ;; 	   :default-chat-non-standard-params '(("stop" . ("\n")))))
-  ;; (setopt ellama-naming-scheme 'ellama-generate-name-by-llm)
-  ;; ;; Translation llm provider
-  ;; (setopt ellama-translation-provider
-  ;; 	  (make-llm-ollama
-  ;; 	   :chat-model "qwen2.5:3b"
-  ;; 	   :embedding-model "nomic-embed-text"
-  ;; 	   :default-chat-non-standard-params
-  ;; 	   '(("num_ctx" . 32768))))
-  ;; (setopt ellama-extraction-provider (make-llm-ollama
-  ;;                                     ;; ollama pull "qwen2.5-coder:7b-instruct-q8_0"
-  ;; 				      :chat-model "qwen2.5-coder:7b-instruct-q8_0"
-  ;; 				      :embedding-model "nomic-embed-text"
-  ;; 				      :default-chat-non-standard-params
-  ;; 				      '(("num_ctx" . 32768))))
-  ;; customize display buffer behaviour
-  ;; see ~(info "(elisp) Buffer Display Action Functions")~
-  (setopt ellama-chat-display-action-function #'display-buffer-full-frame)
-  (setopt ellama-instant-display-action-function #'display-buffer-at-bottom)
-  :config
-  ;; show ellama context in header line in all buffers
-  (ellama-context-header-line-global-mode +1)
-  ;; show ellama session id in header line in all buffers
-  (ellama-session-header-line-global-mode +1)
-  ;; handle scrolling events
-  (advice-add 'pixel-scroll-precision :before #'ellama-disable-scroll)
-  (advice-add 'end-of-buffer :after #'ellama-enable-scroll))
-(map! :leader
-      "m a" '(:ignore t :which-key "interact with ai")
-      :prefix "m a"
-      :desc "open chat" "t" #'ellama-chat
-      :desc "summarize" "s" #'ellama-summarize
-      :desc "ask" "a" #'ellama-ask-about
-      :desc "define" "d" #'ellama-define-word
-      :desc "commit msg" "g" #'ellama-generate-commit-message
-      :desc "write" "w" #'ellama-write
-      :desc "kill" "k" #'ellama-session-kill
-      "c" '(:ignore t :which-key "coding")
-      :desc "description to code" "a" #'ellama-code-add
-      :desc "review" "r" #'ellama-code-review
-      :desc "improve" "i" #'ellama-code-improve
-      :desc "complete" "c" #'ellama-code-complete
-      "i" '(:ignore t :which-key "improve writing")
-      :desc "grammar" "i g" #'ellama-improve-grammar
-      :desc "wording" "i w" #'ellama-improve-wording
-      :desc "conciseness" "i c" #'ellama-improve-conciseness
-      )
-;; ellama-complete ???
+;; (use-package! ellama
+;;   :ensure t
+;;   ;;::bind ("C-c e" . ellama)
+;;   :bind ("C-c a" . ellama)
+;;   ;; send last message in chat buffer with C-c C-c
+;;   :hook (org-ctrl-c-ctrl-c-final . ellama-chat-send-last-message)
+;;   :init
+;;   ;; TODO Check: OLD? DEPRECATED? setup key bindings
+;;   ;; (setopt ellama-keymap-prefix "C-c e")
+;;   ;; (setopt ellama-keymap-prefix "C-c a")
+;;   ;; language you want ellama to translate to
+;;   ;; (setopt ellama-language "German")
+;;   ;; could be llm-openai for example
+;;   ;;(require 'llm-ollama)
+;;   ;; (setopt ellama-provider
+;;   ;; 	  (make-llm-ollama
+;;   ;; 	   ;; this model should be pulled to use it
+;;   ;; 	   ;; value should be the same as you print in terminal during pull
+;;   ;;          ;; ollama pull "llama3:8b-instruct-q8_0"
+;;   ;; 	   :chat-model "llama3:8b-instruct-q8_0"
+;;   ;; 	   :embedding-model "nomic-embed-text"
+;;   ;; 	   :default-chat-non-standard-params '(("num_ctx" . 8192))))
+;;   ;; (setopt ellama-summarization-provider
+;;   ;; 	  (make-llm-ollama
+;;   ;;          ;; ollama pull "qwen2.5:3b"
+;;   ;; 	   :chat-model "qwen2.5:3b"
+;;   ;; 	   :embedding-model "nomic-embed-text"
+;;   ;; 	   :default-chat-non-standard-params '(("num_ctx" . 32768))))
+;;   ;; (setopt ellama-coding-provider
+;;   ;; 	  (make-llm-ollama
+;;   ;;          ;; ollama pull "qwen2.5-coder:3b"
+;;   ;; 	   :chat-model "qwen2.5-coder:3b"
+;;   ;; 	   :embedding-model "nomic-embed-text"
+;;   ;; 	   :default-chat-non-standard-params '(("num_ctx" . 32768))))
+;;   (require 'llm-gemini)
+;;   (setopt ellama-provider
+;;           (make-llm-gemini
+;;            :key (auth-source-pick-first-password  :host "Google Gemini API Credentials" :user "credential")
+;;            ;; SEE: https://ai.google.dev/gemini-api/docs/models
+;;            ;; Enhanced thinking and reasoning, multimodal understanding, advanced coding, and more
+;;            :chat-model "gemini-2.5-pro"
+;;            :embedding-model "embedding-001")
+;;           ;; FIXME NOT working llm-warn-on-nonfree nil)
+;;           )
+;;   ;; Predefined llm providers for interactive switching.
+;;   ;; You shouldn't add ollama providers here - it can be selected interactively
+;;   ;; without it. It is just example.
+;;   ;;(setopt ellama-providers
+;;   ;;	  '(("zephyr" . (make-llm-ollama
+;;   ;;			 :chat-model "zephyr:7b-beta-q6_K"
+;;   ;;			 :embedding-model "zephyr:7b-beta-q6_K"))
+;;   ;;	    ("mistral" . (make-llm-ollama
+;;   ;;			  :chat-model "mistral:7b-instruct-v0.2-q6_K"
+;;   ;;			  :embedding-model "mistral:7b-instruct-v0.2-q6_K"))
+;;   ;;	    ("mixtral" . (make-llm-ollama
+;;   ;;			  :chat-model "mixtral:8x7b-instruct-v0.1-q3_K_M-4k"
+;;   ;;			  :embedding-model "mixtral:8x7b-instruct-v0.1-q3_K_M-4k"))))
+;;   ;; Naming new sessions with llm
+;;   ;; (setopt ellama-naming-provider
+;;   ;; 	  (make-llm-ollama
+;;   ;; 	   :chat-model "llama3:8b-instruct-q8_0"
+;;   ;; 	   :embedding-model "nomic-embed-text"
+;;   ;; 	   :default-chat-non-standard-params '(("stop" . ("\n")))))
+;;   ;; (setopt ellama-naming-scheme 'ellama-generate-name-by-llm)
+;;   ;; ;; Translation llm provider
+;;   ;; (setopt ellama-translation-provider
+;;   ;; 	  (make-llm-ollama
+;;   ;; 	   :chat-model "qwen2.5:3b"
+;;   ;; 	   :embedding-model "nomic-embed-text"
+;;   ;; 	   :default-chat-non-standard-params
+;;   ;; 	   '(("num_ctx" . 32768))))
+;;   ;; (setopt ellama-extraction-provider (make-llm-ollama
+;;   ;;                                     ;; ollama pull "qwen2.5-coder:7b-instruct-q8_0"
+;;   ;; 				      :chat-model "qwen2.5-coder:7b-instruct-q8_0"
+;;   ;; 				      :embedding-model "nomic-embed-text"
+;;   ;; 				      :default-chat-non-standard-params
+;;   ;; 				      '(("num_ctx" . 32768))))
+;;   ;; customize display buffer behaviour
+;;   ;; see ~(info "(elisp) Buffer Display Action Functions")~
+;;   (setopt ellama-chat-display-action-function #'display-buffer-full-frame)
+;;   (setopt ellama-instant-display-action-function #'display-buffer-at-bottom)
+;;   :config
+;;   ;; show ellama context in header line in all buffers
+;;   (ellama-context-header-line-global-mode +1)
+;;   ;; show ellama session id in header line in all buffers
+;;   (ellama-session-header-line-global-mode +1)
+;;   ;; handle scrolling events
+;;   (advice-add 'pixel-scroll-precision :before #'ellama-disable-scroll)
+;;   (advice-add 'end-of-buffer :after #'ellama-enable-scroll))
+;; (map! :leader
+;;       "m a e" '(:ignore t :which-key "interact with ai (ellama)")
+;;       :prefix "m a e"
+;;       :desc "open chat" "t" #'ellama-chat
+;;       :desc "summarize" "s" #'ellama-summarize
+;;       :desc "ask" "a" #'ellama-ask-about
+;;       :desc "define" "d" #'ellama-define-word
+;;       :desc "commit msg" "g" #'ellama-generate-commit-message
+;;       :desc "write" "w" #'ellama-write
+;;       :desc "kill" "k" #'ellama-session-kill
+;;       "c" '(:ignore t :which-key "coding")
+;;       :desc "description to code" "a" #'ellama-code-add
+;;       :desc "review" "r" #'ellama-code-review
+;;       :desc "improve" "i" #'ellama-code-improve
+;;       :desc "complete" "c" #'ellama-code-complete
+;;       "i" '(:ignore t :which-key "improve writing")
+;;       :desc "grammar" "i g" #'ellama-improve-grammar
+;;       :desc "wording" "i w" #'ellama-improve-wording
+;;       :desc "conciseness" "i c" #'ellama-improve-conciseness
+;;       )
+;; ;; ellama-complete ???
 
 ;; Listing of todos for projects
 ;; FIXME it seems it creates problems
@@ -420,14 +420,14 @@
 ;; MCPs
 ;; https://github.com/lizqwerscott/mcp.el
 ;; TODO decide on the folder reference
-(use-package! mcp
-  :ensure t
-  :after gptel
-  :custom (mcp-hub-servers
-           `(("filesystem" . (:command "npx" :args ("-y" "@modelcontextprotocol/server-filesystem" "/home/projects/")))
-             ("fetch" . (:command "uvx" :args ("mcp-server-fetch")))))
-  :config (require 'mcp-hub)
-  :hook (after-init . mcp-hub-start-all-server))
+;; (use-package! mcp
+;;   :ensure t
+;;   :after gptel
+;;   :custom (mcp-hub-servers
+;;            `(("filesystem" . (:command "npx" :args ("-y" "@modelcontextprotocol/server-filesystem" "/home/projects/")))
+;;              ("fetch" . (:command "uvx" :args ("mcp-server-fetch")))))
+;;   :config (require 'mcp-hub)
+;;   :hook (after-init . mcp-hub-start-all-server))
 
 ;; Obsidian Vault Support
 ;; https://github.com/licht1stein/obsidian.el
