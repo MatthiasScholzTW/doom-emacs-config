@@ -304,6 +304,9 @@
                       :activation-fn (lsp-activate-on "terramate")
                       :server-id 'terrmate))
 
+;; TODO Test: Delete whitespace on save, including in markdow-mode
+;; https://practical.li/doom-emacs/basics/#format-tools
+(setq ws-butler-global-exempt-modes '(special-mode comint-mode term-mode eshell-mode diff-mode))
 
 ;; Interactive JSON with jq
 ;; https://github.com/ljos/jq-mode
