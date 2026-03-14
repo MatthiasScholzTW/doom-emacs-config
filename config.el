@@ -63,7 +63,12 @@
 ;; golang
 ;; https://emacs-lsp.github.io/dap-mode/page/configuration/#go
 ;; if you want to debug current test function inside test file use "Go Dlv Test Current Function Configuration"
-(require 'dap-dlv-go)
+;; FIXME file-missing: no such file or directory dap-dlv-go -> check packages.el and docs
+;; (require 'dap-dlv-go)
+;; Delay lsp-mode startup to run after direnv to be able to pick up provided binaries (e.g. dlv)
+(use-package! lsp-mode
+  :hook (go-mode . lsp-deferred)
+  :commands (lsp lsp-deferred))
 
 ;; customize evil-mode
 ;; https://docs.doomemacs.org/latest/modules/editor/evil/
