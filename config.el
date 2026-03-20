@@ -70,6 +70,29 @@
   :hook (go-mode . lsp-deferred)
   :commands (lsp lsp-deferred))
 
+;; Open Policy Agent (rego)
+;; Configure LSP properly using after!
+(after! lsp-mode
+  ;; Map rego-mode to the "rego" language ID
+  (add-to-list 'lsp-language-id-configuration '(rego-mode . "rego"))
+
+  ;; Register Regal using :major-modes instead of a custom activation function
+  (lsp-register-client
+   (make-lsp-client
+    :new-connection (lsp-stdio-connection '("regal" "language-server"))
+    :major-modes '(rego-mode)
+    :server-id 'regal-lsp))
+
+  ;; Register the client package
+  (add-to-list 'lsp-client-packages 'regal-lsp))
+;; Setup Regal as the Formatter (SPC c f)
+(set-formatter! 'regal-fix
+  '("regal" "fix" "--format" "json" "-")
+  :modes '(rego-mode))
+;; Start LSP automatically for rego
+(add-hook 'rego-mode-hook #'lsp)
+
+
 ;; customize evil-mode
 ;; https://docs.doomemacs.org/latest/modules/editor/evil/
 (setq evil-move-cursor-back nil)
