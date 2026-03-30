@@ -132,3 +132,8 @@
 ;; https://github.com/JasZhe/hurl-mode
 (package! hurl-mode :recipe (:host github :repo "jaszhe/hurl-mode" :files ("*.el")))
 
+;; TODO not working since the grammar can not be compiled
+;; Risor TS mode
+(package! risor-ts-mode
+  :recipe (:local-repo "."
+           :files ("risor-ts-mode.el")))

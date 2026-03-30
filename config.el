@@ -539,6 +539,16 @@
 (provide 'my-micropython)
 ;;; my-micropython.el ends here
 
+
+;; Risor TS mode
+(use-package! risor-ts-mode
+  :mode (("\\.risor\\'" . risor-ts-mode)
+         ("\\.ts.risor\\'" . risor-ts-mode))
+  :config
+  (add-to-list 'treesit-language-source-alist '(risor "https://github.com/applejag/tree-sitter-risor"))
+  (unless (treesit-language-available-p 'risor)
+    (treesit-install-language-grammar 'risor)))
+
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
 ;;
