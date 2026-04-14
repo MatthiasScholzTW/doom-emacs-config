@@ -620,6 +620,8 @@
 ;; Kubernetes Cluster Management
 ;; https://github.com/jinnovation/kele.el
 (use-package! kele
+  :defer t
+  :commands (kele-get kele-resource kele-context kele-namespace kele-proxy)
   :config
   (kele-mode 1))
 
