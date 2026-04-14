@@ -24,7 +24,7 @@ launchctl bootstrap "gui/$(id -u)" "$PLIST_PATH"
 echo "==> Emacs daemon restarted via launchd."
 
 # Wait for it to come up
-EMACSCLIENT="/opt/homebrew/bin/emacsclient"
+EMACSCLIENT="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient"
 echo -n "==> Waiting for daemon"
 for i in {1..30}; do
   if "$EMACSCLIENT" -e '(+ 1 0)' >/dev/null 2>&1; then

@@ -1,5 +1,7 @@
 emacs_path := ~/.emacs.d
 bin_path := $(emacs_path)/bin
+# Use emacs-plus (cask) binary so doom builds for Emacs 30
+export EMACS := /Applications/Emacs.app/Contents/MacOS/bin/emacs
 cmd := $(bin_path)/doom
 sync:
 	$(cmd) sync
@@ -16,7 +18,7 @@ upgrade-manual:
 build:
 	$(cmd) build
 
-emacs_version := 30.1
+emacs_version := 30.2
 emacs_vterm_dir := $(emacs_path)/.local/straight/build-$(emacs_version)/vterm/build
 
 libvterm_version := 0.3.3
@@ -58,6 +60,9 @@ start-daemon: ## Start the Emacs daemon
 
 stop-daemon: ## Stop the Emacs daemon
 	$(daemon_script) stop
+
+status-daemon: ## Check if the Emacs daemon is running
+	$(daemon_script) status
 
 restart-daemon: ## Restart daemon (use after doom sync / upgrade)
 	$(CURDIR)/bin/restart-daemon

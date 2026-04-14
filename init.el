@@ -103,12 +103,13 @@
        ;;pass              ; password manager for nerds
        pdf               ; pdf enhancements
 
-
-                                        ; NOTE Currently there is an issue with emacs launcher app not setting all nix variables correctly
-                                        ; https://github.com/purcell/envrc/issues/92
-                                        ; -> using terminal to start emacs
-                                        ; TODO consider using the launchctl workaround:
-                                        ; https://github.com/purcell/envrc/issues/92#issuecomment-2442682887
+       ;; NOTE Currently there is an issue with emacs launcher app not setting all nix variables correctly
+       ;; https://github.com/purcell/envrc/issues/92
+       ;; -> using terminal to start emacs
+       ;; TODO consider using the launchctl workaround:
+       ;; https://github.com/purcell/envrc/issues/92#issuecomment-2442682887
+       ;; NOTE: emacs-plus cask injects PATH at install time, so nix/homebrew
+       ;; paths are available without exec-path-from-shell or terminal workarounds.
        dotenv         ; Load the content of a .env file into emacs for projectile and compilation
        ;;prodigy           ; FIXME managing external services & code builders
        ;;rgb               ; creating color strings

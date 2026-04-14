@@ -678,6 +678,14 @@
 
 
 ;; ──────────────────────────────────────────────────────────────────────────────
+;; Emacs Server — required for Emacs Client.app (emacs-plus cask)
+;; ──────────────────────────────────────────────────────────────────────────────
+
+(require 'server)
+(unless (or (daemonp) (server-running-p))
+  (server-start))
+
+;; ──────────────────────────────────────────────────────────────────────────────
 ;; Agent Workspace — a dedicated Doom workspace for agent-shell sessions
 ;; (Auggie, OpenCode, Gemini, or any ACP-supported agent)
 ;; ──────────────────────────────────────────────────────────────────────────────
