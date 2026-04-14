@@ -635,6 +635,29 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+
+
+;; vterm: directory tracking via vterm_cmd (workaround for 51;A OSC not firing)
+(after! vterm
+  (add-to-list 'vterm-eval-cmds
+               '("update-pwd" (lambda (path) (setq default-directory path)))))
+
+;; vterm: open in current file's directory by default (swap prefix arg behavior)
+;; Without prefix: use default-directory (current file's folder)
+;; With prefix (C-u): use project root
+(defadvice! +vterm--use-cwd-by-default-a (arg display-fn)
+  :override #'+vterm--configure-project-root-and-display
+  (unless (fboundp 'module-load)
+    (user-error "Your build of Emacs lacks dynamic modules support and cannot load vterm"))
+  (let* ((project-root (or (doom-project-root) default-directory))
+         (default-directory
+           (if arg
+               project-root
+             default-directory)))
+    (setenv "PROOT" project-root)
+    (funcall display-fn)))
+
+
 ;; ──────────────────────────────────────────────────────────────────────────────
 ;; Agent Workspace — a dedicated Doom workspace for agent-shell sessions
 ;; (Auggie, OpenCode, Gemini, or any ACP-supported agent)
