@@ -597,6 +597,13 @@
   (unless (treesit-language-available-p 'risor)
     (treesit-install-language-grammar 'risor)))
 
+
+;; Kubernetes Cluster Management
+;; https://github.com/jinnovation/kele.el
+(use-package! kele
+  :config
+  (kele-mode 1))
+
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
 ;;

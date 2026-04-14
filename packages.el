@@ -143,3 +143,7 @@
 
 ;; RSS Feed Reader Optimization
 (package! elfeed-goodies)
+
+;; Kubernetes Cluster Management
+;; https://github.com/jinnovation/kele.el
+(package! kele)
