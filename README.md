@@ -6,6 +6,24 @@ Emacs runs as a background daemon managed by macOS `launchd`. All frames connect
 long-running process, so buffers, LSP sessions, and agent-shell sessions (Auggie, OpenCode, Gemini,
 etc.) are always available — no matter how many windows you open.
 
+### Getting Started
+
+1. Quit your current Emacs.app instance.
+2. Install and start the launchd service:
+   ```sh
+   cd ~/.doom.d
+   make install-daemon
+   make start-daemon
+   ```
+3. Open **EmacsClient.app** from `~/Applications/` (or use Spotlight → "EmacsClient").
+4. Press `SPC m a w` to open the Agents workspace.
+5. After any `doom sync` or config change, restart with:
+   ```sh
+   make restart-daemon
+   # or combine both steps:
+   make sync-restart
+   ```
+
 ### Why a daemon?
 
 macOS GUI apps (including Emacs.app) launch in a minimal environment that is missing Nix, Homebrew,
@@ -35,7 +53,7 @@ The app reuses the Emacs icon from `/Applications/Emacs.app`.
 
 All agent-shell sessions are grouped in a single Doom workspace called **Agents**. This keeps them
 separated from your code buffers and lets you switch back and forth. Any ACP-supported agent
-(Auggie, OpenCode, Gemini, etc.) runs inside this workspace.
+(OpenCode, Gemini, etc.) runs inside this workspace.
 
 | Keybinding    | Action                                      |
 |---------------|---------------------------------------------|
@@ -56,24 +74,6 @@ make sync-restart     # doom sync, then restart daemon
 make upgrade-restart  # doom upgrade, then restart daemon
 make uninstall-daemon # Remove the launchd service
 ```
-
-### Getting Started
-
-1. Quit your current Emacs.app instance.
-2. Install and start the launchd service:
-   ```sh
-   cd ~/.doom.d
-   make install-daemon
-   make start-daemon
-   ```
-3. Open **EmacsClient.app** from `~/Applications/` (or use Spotlight → "EmacsClient").
-4. Press `SPC m a w` to open the Agents workspace.
-5. After any `doom sync` or config change, restart with:
-   ```sh
-   make restart-daemon
-   # or combine both steps:
-   make sync-restart
-   ```
 
 ### Logs
 
