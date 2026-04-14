@@ -431,7 +431,28 @@
 ;; https://github.com/jethrokuan/agent-shell-manager
 (use-package! agent-shell-manager
   :config
-  (require 'agent-shell))
+  (require 'agent-shell)
+
+  ;; Override goto to always display in the current frame instead of
+  ;; jumping to an already-visible window in another frame.
+  ;; Opens sessions side by side (vertical split).
+  (defun my/agent-shell-manager-goto ()
+    "Switch to the agent-shell buffer at point in a side-by-side split."
+    (interactive)
+    (when-let* ((buffer (tabulated-list-get-id)))
+      (if (buffer-live-p buffer)
+          (progn
+            (pop-to-buffer buffer
+                           '(display-buffer-in-direction
+                             (direction . right)
+                             (window-width . 0.5)))
+            (agent-shell-manager--hide-window))
+        (user-error "Buffer no longer exists"))))
+
+  (evil-define-key 'normal agent-shell-manager-mode-map
+    (kbd "RET") #'my/agent-shell-manager-goto)
+  (define-key agent-shell-manager-mode-map
+    (kbd "RET") #'my/agent-shell-manager-goto))
 ;; https://github.com/cmacrae/agent-shell-sidebar
 (use-package! agent-shell-sidebar
   :config
