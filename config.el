@@ -74,7 +74,6 @@
   :commands (lsp lsp-deferred))
 
 ;; Open Policy Agent (rego)
-;; Configure LSP properly using after!
 (after! lsp-mode
   ;; Map rego-mode to the "rego" language ID
   (add-to-list 'lsp-language-id-configuration '(rego-mode . "rego"))
@@ -95,7 +94,21 @@
 ;; Start LSP automatically for rego
 (add-hook 'rego-mode-hook #'lsp)
 
+;; Terragrunt LSP
+(after! lsp-mode
+  ;; Map hcl to terragrunt - FIXME HCL could be other files than terragrunt, e.g. terramate
+  (add-to-list 'lsp-language-id-configuration '(hcl-mode . "terragrunt"))
 
+  ;; Register Terragrunt LSP
+  (lsp-register-client
+   (make-lsp-client
+    :new-connection (lsp-stdio-connection '("terragrunt-ls" "language-server"))
+    :major-modes '(hcl-mode)
+    :server-id 'terragrunt-lsp))
+
+  ;; Register the client package
+  (add-to-list 'lsp-client-packages 'terragrunt-ls))
+(add-hook 'hcl-mode-hook #'lsp)
 ;; customize evil-mode
 ;; https://docs.doomemacs.org/latest/modules/editor/evil/
 (setq evil-move-cursor-back nil)
