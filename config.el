@@ -635,3 +635,27 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+;; ──────────────────────────────────────────────────────────────────────────────
+;; Agent Workspace — a dedicated Doom workspace for agent-shell sessions
+;; (Auggie, OpenCode, Gemini, or any ACP-supported agent)
+;; ──────────────────────────────────────────────────────────────────────────────
+
+(defvar my/agent-workspace-name "Agents"
+  "Name of the Doom workspace dedicated to agent-shell sessions.")
+
+(defun my/agent-workspace ()
+  "Switch to (or create) the Agents workspace and open agent-shell-manager."
+  (interactive)
+  (if (modulep! :ui workspaces)
+      (progn
+        ;; Create the workspace if it doesn't exist, or switch to it
+        (+workspace-switch my/agent-workspace-name t)
+        ;; Open agent-shell-manager in the workspace
+        (agent-shell-manager-toggle))
+    ;; Fallback if workspaces module is not loaded
+    (agent-shell-manager-toggle)))
+
+;; Keybinding: SPC m a w -> open agent workspace
+(map! :leader
+      :prefix "m a"
+      :desc "agent workspace" "w" #'my/agent-workspace)
