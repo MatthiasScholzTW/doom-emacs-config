@@ -139,6 +139,12 @@
             (funcall (intern (format "+lookup/%s" fn)) identifier arg)))))
 (define-key evil-normal-state-map "god" '+lookup/definition-other-window)
 
+;; Find file starting from project root (works from vterm and any buffer)
+(map! :leader
+      :desc "Find file from project root"
+      "f p" (cmd! (let ((default-directory (or (doom-project-root) default-directory)))
+                    (call-interactively #'find-file))))
+
 ;; Change default project search key binding
 (map! :leader
       :desc "Search project"
