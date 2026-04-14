@@ -1,0 +1,62 @@
+#!/bin/zsh
+# Start Emacs in daemon mode with a full login-shell environment.
+# This ensures Nix, Homebrew, and direnv paths are available.
+#
+# Usage: emacs-daemon [start|stop|restart]
+
+set -euo pipefail
+
+# Source the login environment so PATH includes nix, homebrew, etc.
+# This fixes the issue noted in init.el where Emacs.app misses nix variables.
+if [[ -f /etc/zshenv ]]; then
+  source /etc/zshenv
+fi
+if [[ -f "$HOME/.zshenv" ]]; then
+  source "$HOME/.zshenv"
+fi
+if [[ -f "$HOME/.zprofile" ]]; then
+  source "$HOME/.zprofile"
+fi
+
+EMACS="/opt/homebrew/bin/emacs"
+EMACSCLIENT="/opt/homebrew/bin/emacsclient"
+
+_is_running() {
+  "$EMACSCLIENT" -e '(+ 1 0)' >/dev/null 2>&1
+}
+
+_start() {
+  if _is_running; then
+    echo "Emacs daemon is already running."
+    return 0
+  fi
+  echo "Starting Emacs daemon..."
+  "$EMACS" --daemon
+  echo "Emacs daemon started."
+}
+
+_stop() {
+  if ! _is_running; then
+    echo "Emacs daemon is not running."
+    return 0
+  fi
+  echo "Stopping Emacs daemon..."
+  "$EMACSCLIENT" -e '(kill-emacs)' >/dev/null 2>&1 || true
+  echo "Emacs daemon stopped."
+}
+
+_restart() {
+  _stop
+  sleep 1
+  _start
+}
+
+case "${1:-start}" in
+  start)   _start   ;;
+  stop)    _stop    ;;
+  restart) _restart ;;
+  *)
+    echo "Usage: $0 {start|stop|restart}"
+    exit 1
+    ;;
+esac

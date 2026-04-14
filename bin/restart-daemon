@@ -1,0 +1,39 @@
+#!/bin/zsh
+# Restart the Emacs daemon via launchd.
+# Use this after `doom sync`, `doom upgrade`, or config changes.
+#
+# Usage: restart-daemon
+
+set -euo pipefail
+
+PLIST_LABEL="org.gnu.emacs.daemon"
+PLIST_PATH="$HOME/Library/LaunchAgents/${PLIST_LABEL}.plist"
+DAEMON_SCRIPT="$HOME/.doom.d/bin/emacs-daemon"
+
+echo "==> Stopping Emacs daemon..."
+"$DAEMON_SCRIPT" stop
+sleep 1
+
+echo "==> Reloading launchd service..."
+# Unload (ignore errors if not loaded)
+launchctl bootout "gui/$(id -u)" "$PLIST_PATH" 2>/dev/null || true
+sleep 1
+
+# Reload
+launchctl bootstrap "gui/$(id -u)" "$PLIST_PATH"
+echo "==> Emacs daemon restarted via launchd."
+
+# Wait for it to come up
+EMACSCLIENT="/opt/homebrew/bin/emacsclient"
+echo -n "==> Waiting for daemon"
+for i in {1..30}; do
+  if "$EMACSCLIENT" -e '(+ 1 0)' >/dev/null 2>&1; then
+    echo " ready!"
+    exit 0
+  fi
+  echo -n "."
+  sleep 1
+done
+
+echo " timeout! Check /tmp/emacs-daemon.stderr.log"
+exit 1

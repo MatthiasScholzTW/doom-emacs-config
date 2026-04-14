@@ -31,3 +31,32 @@ clean:
 clear-package-cache:
 	rm -rf $(emacs_path)/.local/straight
 	$(cmd) sync
+
+
+# ── Emacs Daemon (launchd) ──────────────────────────────────────────────
+
+daemon_plist_label := org.gnu.emacs.daemon
+daemon_plist := ~/Library/LaunchAgents/$(daemon_plist_label).plist
+daemon_script := $(CURDIR)/bin/emacs-daemon
+
+install-daemon: ## Load the launchd service (starts Emacs daemon on login)
+	launchctl bootstrap gui/$$(id -u) $(daemon_plist)
+	@echo "Emacs daemon service installed. It will start on next login."
+	@echo "Run 'make start-daemon' to start it now."
+
+uninstall-daemon: stop-daemon ## Remove the launchd service
+	launchctl bootout gui/$$(id -u) $(daemon_plist) 2>/dev/null || true
+	@echo "Emacs daemon service uninstalled."
+
+start-daemon: ## Start the Emacs daemon
+	$(daemon_script) start
+
+stop-daemon: ## Stop the Emacs daemon
+	$(daemon_script) stop
+
+restart-daemon: ## Restart daemon (use after doom sync / upgrade)
+	$(CURDIR)/bin/restart-daemon
+
+sync-restart: sync restart-daemon ## doom sync then restart daemon
+
+upgrade-restart: upgrade restart-daemon ## doom upgrade then restart daemon
