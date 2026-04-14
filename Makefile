@@ -17,11 +17,16 @@ build:
 	$(cmd) build
 
 emacs_version := 30.1
-emacs_vterm_dir := /Users/matthias/.emacs.d/.local/straight/build-$(emacs_version)/vterm/build
+emacs_vterm_dir := $(emacs_path)/.local/straight/build-$(emacs_version)/vterm/build
+
 libvterm_version := 0.3.3
+# FIXME depends on brew, support nix, too
 libvterm_dir := /opt/homebrew/Cellar/libvterm/$(libvterm_version)
+setup-vterm:
+	brew install libvterm
+
 build-vterm:
-	mkdir $(emacs_vterm_dir)
+	mkdir -p $(emacs_vterm_dir)
 	cd $(emacs_vterm_dir) && cmake -DLIBVTERM_INCLUDE_DIR=$(libvterm_dir)/include -DLIBVTERM_LIBRARY=$(libvterm_dir)/lib/libvterm.0.dylib ..
 	cd $(emacs_vterm_dir) && make
 
