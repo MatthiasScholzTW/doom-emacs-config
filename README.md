@@ -1,85 +1,116 @@
 # Doom Emacs configuration
 
-## Emacs Plus (Cask)
+## Installation (New Machine)
 
-This setup uses [emacs-plus](https://github.com/d12frosted/homebrew-emacs-plus)
-installed via Homebrew cask (`emacs-plus-app`). It provides Emacs 30 with
-native compilation, tree-sitter, and full daemon + GUI support out of the box.
+### 1. Install Emacs Plus
 
-### Prerequisites
+This setup uses
+[emacs-plus](https://github.com/d12frosted/homebrew-emacs-plus)
+installed via Homebrew cask. It provides Emacs 30 with native
+compilation, tree-sitter, and full daemon + GUI support.
 
 ```sh
 brew tap d12frosted/emacs-plus
 brew install --cask emacs-plus-app
 ```
 
-The cask installs both **Emacs.app** and **Emacs Client.app** to `/Applications/`.
-PATH is injected at install time — Nix, Homebrew, and direnv paths are
-available without `exec-path-from-shell` or shell wrappers.
+The cask installs **Emacs.app** and **Emacs Client.app** to
+`/Applications/`. PATH is injected at install time — Nix,
+Homebrew, and direnv paths are available without extra config.
 
-## Emacs Daemon & Emacs Client.app
+### 2. Install Doom Emacs
 
-Emacs runs as a background daemon managed by macOS `launchd`. All frames
-connect to the same long-running process, so buffers, LSP sessions, and
-agent-shell sessions are always available — no matter how many windows
-you open.
+```sh
+git clone https://github.com/doomemacs/doomemacs ~/.emacs.d
+```
 
-**Emacs Client.app** (bundled with emacs-plus) opens new GUI frames via
-`emacsclient`. It can be launched from Spotlight, the Dock, or Finder.
-It also handles Finder "Open With", drag-and-drop, and `org-protocol://`
-URLs.
+### 3. Clone This Config
 
-### Getting Started
+```sh
+git clone <this-repo> ~/.doom.d
+```
 
-1. Quit any running Emacs instance.
-2. Install and start the launchd service:
-   ```sh
-   cd ~/.doom.d
-   make install-daemon
-   make start-daemon
-   ```
-3. Open **Emacs Client.app** from Spotlight or `/Applications/`.
-4. Press `SPC m a w` to open the Agents workspace.
-5. After any `doom sync` or config change, restart with:
-   ```sh
-   make restart-daemon
-   # or combine both steps:
-   make sync-restart
-   ```
+### 4. Patch Emacs Client.app
+
+The bundled Emacs Client.app references
+`/opt/homebrew/bin/emacsclient`, which may not exist if Emacs
+was installed only via the cask. Patch it to use the binary
+inside Emacs.app:
+
+```sh
+cd ~/.doom.d
+make patch-emacs-client
+```
+
+This compiles the AppleScript at `bin/emacs-client.applescript`
+into the app bundle. The patched version:
+
+- Uses `/Applications/Emacs.app/Contents/MacOS/bin/emacsclient`
+- Opens a **new frame** each time (not just focusing an existing
+  one)
+- Handles Finder drag-and-drop and `org-protocol://` URLs
+
+### 5. Sync Doom
+
+Build all packages for the installed Emacs version:
+
+```sh
+make sync
+```
+
+### 6. Install and Start the Daemon
+
+Register the launchd service so the daemon starts on login:
+
+```sh
+make install-daemon
+make start-daemon
+```
+
+Verify it is running:
+
+```sh
+make status-daemon
+```
+
+### 7. Open Emacs
+
+Open **Emacs Client.app** from Spotlight, the Dock, or Finder.
+Each launch opens a new GUI frame connected to the daemon.
+
+## Emacs Daemon
+
+Emacs runs as a background daemon managed by macOS `launchd`.
+All frames connect to the same long-running process, so buffers,
+LSP sessions, and agent-shell sessions are always available — no
+matter how many windows you open.
 
 ### Components
 
-- **`bin/emacs-daemon`** — Starts, stops, or restarts the daemon.
-- **`bin/restart-daemon`** — Restarts the daemon via launchd. Use after
-  `doom sync` or config changes.
-- **`~/Library/LaunchAgents/org.gnu.emacs.daemon.plist`** — launchd
-  service that starts the daemon on login and restarts on crash.
-
-### Agent Workspace
-
-All agent-shell sessions are grouped in a single Doom workspace called
-**Agents**. This keeps them separated from your code buffers and lets
-you switch back and forth. Any ACP-supported agent (Auggie, OpenCode,
-Gemini, etc.) runs inside this workspace.
-
-| Keybinding  | Action                                     |
-|-------------|--------------------------------------------|
-| `SPC m a w` | Switch to (or create) the Agents workspace |
-| `SPC TAB l` | Restore a saved workspace after restart    |
-
-Doom's `persp-mode` persists workspaces across daemon restarts, so your
-agent session layout is restored when you reconnect with Emacs Client.app.
+- **`bin/emacs-daemon`** — Starts, stops, restarts, or checks
+  the status of the daemon.
+- **`bin/restart-daemon`** — Restarts the daemon via launchd.
+  Use after `doom sync` or config changes.
+- **`bin/emacs-client.applescript`** — Source for the patched
+  Emacs Client.app AppleScript.
+- **`~/Library/LaunchAgents/org.gnu.emacs.daemon.plist`** —
+  launchd service that starts the daemon on login and restarts
+  on crash.
 
 ### Makefile Targets
 
 ```
+make sync             # doom sync
+make upgrade          # doom upgrade
 make install-daemon   # Register the launchd service
+make uninstall-daemon # Remove the launchd service
 make start-daemon     # Start the daemon now
 make stop-daemon      # Stop the daemon
+make status-daemon    # Check if the daemon is running
 make restart-daemon   # Full restart via launchd
 make sync-restart     # doom sync, then restart daemon
 make upgrade-restart  # doom upgrade, then restart daemon
-make uninstall-daemon # Remove the launchd service
+make patch-emacs-client # Patch Emacs Client.app AppleScript
 ```
 
 ### Logs
@@ -90,6 +121,23 @@ Daemon stdout and stderr are written to:
 - `/tmp/emacs-daemon.stderr.log`
 
 Check these if the daemon fails to start.
+
+## Agent Workspace
+
+All agent-shell sessions are grouped in a single Doom workspace
+called **Agents**. This keeps them separated from your code
+buffers and lets you switch back and forth. Any ACP-supported
+agent (Auggie, OpenCode, Gemini, etc.) runs inside this
+workspace.
+
+| Keybinding  | Action                                     |
+|-------------|--------------------------------------------|
+| `SPC m a w` | Switch to (or create) the Agents workspace |
+| `SPC TAB l` | Restore a saved workspace after restart    |
+
+Doom's `persp-mode` persists workspaces across daemon restarts,
+so your agent session layout is restored when you reconnect with
+Emacs Client.app.
 
 ## References
 

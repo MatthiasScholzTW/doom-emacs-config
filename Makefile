@@ -70,3 +70,12 @@ restart-daemon: ## Restart daemon (use after doom sync / upgrade)
 sync-restart: sync restart-daemon ## doom sync then restart daemon
 
 upgrade-restart: upgrade restart-daemon ## doom upgrade then restart daemon
+
+# ── Emacs Client.app Patch ──────────────────────────────────────────────
+
+emacs_client_app := /Applications/Emacs Client.app
+emacs_client_scpt := $(emacs_client_app)/Contents/Resources/Scripts/main.scpt
+
+patch-emacs-client: ## Patch Emacs Client.app to use the correct emacsclient binary
+	osacompile -o "$(emacs_client_scpt)" $(CURDIR)/bin/emacs-client.applescript
+	@echo "Emacs Client.app patched."
