@@ -139,6 +139,91 @@ Doom's `persp-mode` persists workspaces across daemon restarts,
 so your agent session layout is restored when you reconnect with
 Emacs Client.app.
 
+## Shell Setup (zshrc)
+
+vterm shells spawned by Emacs need extra configuration in
+`~/.zshrc` to work correctly with directory tracking and shell
+hook tools. The ordering matters — direnv must come first, the
+vterm integration block second, and tools that rely on
+`add-zsh-hook` (Starship, Atuin, etc.) last.
+
+```zsh
+# 1. Completion
+autoload -Uz compinit
+compinit
+
+# 2. Direnv — must be early; it prepends to precmd_functions
+#    directly (does not use add-zsh-hook)
+eval "$(direnv hook zsh)"
+
+# 3. Emacs vterm integration — only active inside vterm
+if [[ "$INSIDE_EMACS" = 'vterm' ]] \
+    && [[ -n ${EMACS_VTERM_PATH} ]] \
+    && [[ -f ${EMACS_VTERM_PATH}/etc/emacs-vterm-zsh.sh ]]; then
+    source "${EMACS_VTERM_PATH}/etc/emacs-vterm-zsh.sh"
+
+    # Restore add-zsh-hook after vterm clobbers it
+    # (see Known Issues below)
+    unfunction add-zsh-hook 2>/dev/null
+    autoload -Uz add-zsh-hook
+
+    # Directory tracking via vterm_cmd (51;E OSC)
+    vterm_set_directory() {
+        vterm_cmd update-pwd "$(pwd)/"
+    }
+    precmd_functions+=( vterm_set_directory )
+    vterm_set_directory
+fi
+
+# 4. Other shell init (fzf, aliases, …)
+source <(fzf --zsh)
+
+# 5. Prompt and history — must come after the vterm block so
+#    their add-zsh-hook calls use the real function
+eval "$(starship init zsh)"
+eval "$(zoxide init --cmd cd zsh)"
+eval "$(atuin init zsh)"
+```
+
+The vterm block is guarded by `$INSIDE_EMACS`, so it is skipped
+in regular terminal sessions. Doom's vterm module sets
+`EMACS_VTERM_PATH` automatically.
+
+## Known Issues
+
+### vterm breaks `add-zsh-hook` (affects Atuin, Starship, etc.)
+
+The vterm shell integration script (`emacs-vterm-zsh.sh`) contains
+this line:
+
+```zsh
+add-zsh-hook -Uz chpwd (){ print -Pn "\e]2;%m:%2~\a" }
+```
+
+Zsh misparsed the trailing anonymous function `(){ ... }` as a
+function redefinition, silently replacing the real `add-zsh-hook`
+with a one-liner that only prints a terminal title escape sequence.
+Every subsequent call to `add-zsh-hook` — by Starship, Atuin,
+Zoxide, or any other tool — becomes a no-op. The symptom is that
+shell hooks (preexec, precmd) are never registered, so Atuin
+history is never recorded, Starship prompt timing breaks, etc.
+
+The workaround in `~/.zshrc` destroys the broken function and
+reloads the real one immediately after sourcing the vterm script:
+
+```zsh
+source "${EMACS_VTERM_PATH}/etc/emacs-vterm-zsh.sh"
+
+unfunction add-zsh-hook 2>/dev/null
+autoload -Uz add-zsh-hook
+```
+
+This only runs inside vterm (`$INSIDE_EMACS = 'vterm'`), so
+regular terminal sessions are unaffected.
+
+**Upstream bug**: to be filed against
+[emacs-libvterm](https://github.com/akermu/emacs-libvterm).
+
 ## References
 
 - [Doomemacs](https://github.com/doomemacs/doomemacs)
