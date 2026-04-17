@@ -1,4 +1,44 @@
-# Doom Emacs configuration
+# My Doom Emacs Configuration
+
+This repository contains my personal configuration for [Doom Emacs](https://github.com/doomemacs/doomemacs). It is tailored for my development workflow, focusing on Go, Python, Nix, and various DevOps tools.
+
+## Features
+
+- **Modern UI**: Utilizes `vertico` for completion, `treemacs` for file navigation, and the `doom-one` theme.
+- **Language Support**: Comprehensive support for several languages including:
+  - Go (`gopls`)
+  - Python (`pyright`)
+  - Nix
+  - Terraform / HCL (with Terramate LSP)
+  - Shell scripting
+  - YAML, JSON, Markdown
+  - OPA Rego (`regal` LSP)
+- **AI/LLM Integration**: Integrated with multiple AI tools for coding assistance, summarization, and more.
+  - `ellama`
+  - `gptel` (configured with Gemini)
+  - `aider`
+  - `aidermacs`
+- **Tooling**:
+  - Git integration via `magit` with `forge`.
+  - LSP for intelligent code completion and navigation.
+  - Debugging support via DAP for Go.
+  - Docker and Earthfile support.
+  - `direnv` and `.env` file integration.
+  - `difftastic` for better diffs.
+- **Security**: 1Password integration for secrets management.
+
+## Prerequisites
+
+Before installing, ensure you have the following installed:
+- [Emacs](https://www.gnu.org/software/emacs/) (version 27.1 or newer)
+- [Doom Emacs](https://github.com/doomemacs/doomemacs#installation) and its dependencies.
+- A Nerd Font (e.g., [Fira Code Nerd Font](https://www.nerdfonts.com/font-downloads)) for icons to render correctly.
+- External tools used by various packages:
+  - `op` (1Password CLI)
+  - `ollama` for local LLMs
+  - Language-specific LSPs (e.g., `gopls`, `pyright`, `regal`, `markdown-oxide`, `terramate-lsp`)
+  - `difftastic`
+
 
 ## Installation (New Machine)
 

@@ -3,6 +3,16 @@
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
 
+;; Improve Neo2 compatibility when using the build-in keyboard
+;; FIXME not working
+;; TODO check if it works with my custom keyboard as well
+;; FIXME this configuration blocks native macosx shortcuts like copy and paste
+;; (setq mac-function-modifier 'control
+;;       mac-control-modifier 'control
+;;       mac-option-modifier 'none 
+;;       mac-command-modifier 'meta
+;;       ns-right-alternate-modifier 'none
+;;       )
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets. It is optional.
@@ -41,6 +51,8 @@
 ;; Have fine undo instead of the coarse vim default undo until last insert mode
 ;; https://www.reddit.com/r/DoomEmacs/comments/r78bwz/comment/hmxqjzb/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
 (setq evil-want-fine-undo t)
+;; undo in non-file buffers
+;;(add-hook ’evil-local-mode-hook ’turn-on-undo-tree-mode)
 
 ;; Sort directories in dired
 (require 'ls-lisp)
