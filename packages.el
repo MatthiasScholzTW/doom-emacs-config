@@ -132,6 +132,9 @@
 ;; https://github.com/JasZhe/hurl-mode
 (package! hurl-mode :recipe (:host github :repo "jaszhe/hurl-mode" :files ("*.el")))
 
+;; Kanata Configuration File Support
+(package! kanata-kbd-mode :recipe (:host github :repo "chmouel/kanata-kbd-mode" :files ("*.el")))
+
 ;; TODO not working since the grammar can not be compiled
 ;; Risor TS mode
 (package! risor-ts-mode

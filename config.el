@@ -47,6 +47,9 @@
 (setq ls-lisp-dirs-first t)
 (setq ls-lisp-use-insert-directory-program nil)
 
+;; Kanata
+(use-package! kanata-kbd-mode)
+
 ;; 1-Password Connector
 (use-package! auth-source-1password
   :config
