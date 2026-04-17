@@ -140,3 +140,6 @@
 (package! risor-ts-mode
   :recipe (:local-repo "."
            :files ("risor-ts-mode.el")))
+
+;; RSS Feed Reader Optimization
+(package! elfeed-goodies)

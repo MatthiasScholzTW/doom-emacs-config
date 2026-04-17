@@ -148,6 +148,30 @@
       :desc "Search current directory"
       "s d" #'+vertico/project-search-from-cwd)
 
+;; RSS Feed Reader
+(use-package! elfeed-goodies
+  :config
+  (elfeed-goodies/setup)
+  (setq elfeed-goodies/entry-pane-size 0.5)
+  )
+;; automatically update feeds when opening feed viewer
+(add-hook! 'elfeed-search-mode-hook #'elfeed-update)
+;; predefine some common feeds
+(setq elfeed-feeds (quote
+                    (("https://stephango.com/feed.xml" blog kb)
+                     ("https://simonwillison.net/atom/everything/" blog agentic)
+                     ("https://github.com/gemini-cli-extensions/conductor/releases.atom" releases agentic)
+                     ("https://github.com/anomalyco/opencode/releases.atom" releases agentic)
+                     ("https://github.com/code-yeongyu/oh-my-opencode/releases.atom" releases agentic)
+                     ("https://github.com/alvinunreal/oh-my-opencode-slim/releases.atom" release agentic)
+                     ("https://github.com/open-policy-agent/conftest/releases.atom" releases tooling)
+                     ("https://github.com/NixOS/nixpkgs/commits/nixos-unstable/pkgs/by-name/co/conftest.atom" nix tooling)
+                     ("https://github.com/DeterminateSystems/nix-installer/releases.atom" nix os)
+                     ("https://github.com/NixOS/nixpkgs/commits/nixos-unstable/pkgs/by-name/op/opencode/package.nix.atom" nix agentic)
+                     ("https://github.com/xenodium/acp.el/tags.atom" releases emacs)
+                     ("https://github.com/xenodium/agent-shell/tags.atom" releases emacs)
+                     ("https://devenv.sh/feed_rss_created.xml" news tooling))))
+
 ;; Earthly syntax highlighting support
 ;; (use-package! earthfile-mode
 ;;  :mode "Earthfile")
