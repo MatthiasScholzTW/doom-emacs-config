@@ -39,6 +39,17 @@ Before installing, ensure you have the following installed:
   - `difftastic`
 
 
+## Development Notes
+
+### Risor TS Mode
+
+Usage hint. Using additional context for agentic engineering:
+
+```mdx
+@https://www.masteringemacs.org/article/lets-write-a-treesitter-major-mode @https://github.com/rubiojr/rca/blob/main/context-large.txt @https://github.com/applejag/tree-sitter-risor
+Write a emacs major mode for risor using tree-sitter for syntax highlighting.
+```
+
 ## Installation (New Machine)
 
 ### 1. Install Emacs Plus
