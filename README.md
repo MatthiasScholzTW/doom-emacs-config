@@ -16,8 +16,7 @@ This repository contains my personal configuration for [Doom Emacs](https://gith
 - **AI/LLM Integration**: Integrated with multiple AI tools for coding assistance, summarization, and more.
   - `ellama`
   - `gptel` (configured with Gemini)
-  - `aider`
-  - `aidermacs`
+  - `acp`, `agent-client`
 - **Tooling**:
   - Git integration via `magit` with `forge`.
   - LSP for intelligent code completion and navigation.
