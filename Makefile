@@ -1,7 +1,10 @@
 emacs_path := ~/.emacs.d
 bin_path := $(emacs_path)/bin
 # Use emacs-plus (cask) binary so doom builds for Emacs 30
-export EMACS := /Applications/Emacs.app/Contents/MacOS/bin/emacs
+emacs_plus_bin := /Applications/Emacs.app/Contents/MacOS/bin/emacs
+ifneq ($(wildcard $(emacs_plus_bin)),)
+export EMACS := $(emacs_plus_bin)
+endif
 cmd := $(bin_path)/doom
 sync:
 	$(cmd) sync
