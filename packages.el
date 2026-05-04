@@ -141,8 +141,9 @@
   :recipe (:local-repo "."
            :files ("risor-ts-mode.el")))
 
+;; NOTE Deprecated moved to obsidian plugin
 ;; RSS Feed Reader Optimization
-(package! elfeed-goodies)
+;; (package! elfeed-goodies)
 
 ;; Kubernetes Cluster Management
 ;; https://github.com/jinnovation/kele.el
